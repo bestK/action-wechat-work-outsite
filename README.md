@@ -23,13 +23,28 @@
     mentioned_list: '["wangqing","@all"]'
     mentioned_mobile_list: '["13800001111","@all"]'
 ```
+#### 外部群
+```yaml
 
-| 参数                    | 必须    | 说明                                                                                                    |
-|-----------------------|-------|-------------------------------------------------------------------------------------------------------|
-| msgtype               | true  | 消息类型，此时固定为 text                                                                                       |
-| content               | true  | 文本内容，最长不超过 2048 个字节，必须是 utf8 编码                                                                       |
+- name: WeChat Work outside group notification by text
+  uses: bestk/action-wechat-work-outsite@master
+  env:
+    WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
+  with:
+    outside_group: true
+    outside_msgtype: text
+    outside_received_content: "外部群消息"
+    outside_at_list: '["昵称x","昵称y"]'
+    outside_title_list: '["XXX开发者通知群"]'
+
+```
+
+| 参数                  | 必须  | 说明                                                                                                                                                      |
+| --------------------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| msgtype               | true  | 消息类型，此时固定为 text                                                                                                                                 |
+| content               | true  | 文本内容，最长不超过 2048 个字节，必须是 utf8 编码                                                                                                        |
 | mentioned_list        | false | userid 的列表，提醒群中的指定成员(@某个成员)，@all表示提醒所有人，如果开发者获取不到 userid，可以使用 mentioned_mobile_list，必须是序列化后的 JSON 字符串 |
-| mentioned_mobile_list | false | 手机号列表，提醒手机号对应的群成员(@某个成员)，@all表示提醒所有人，必须是序列化后的 JSON 字符串                                                |
+| mentioned_mobile_list | false | 手机号列表，提醒手机号对应的群成员(@某个成员)，@all表示提醒所有人，必须是序列化后的 JSON 字符串                                                           |
 
 ### Markdown 格式消息
 
@@ -48,9 +63,9 @@
     > VIP用户反馈:<font color=\"comment\">15例</font>"
 ```
 
-| 参数      | 必须   | 说明                                                                                                  |
-|---------|------|-----------------------------------------------------------------------------------------------------|
-| msgtype | true | 消息类型，此时固定为 markdown                                                                                 |
+| 参数    | 必须 | 说明                                                                                                                        |
+| ------- | ---- | --------------------------------------------------------------------------------------------------------------------------- |
+| msgtype | true | 消息类型，此时固定为 markdown                                                                                               |
 | content | true | markdown 内容，最长不超过 4096 个字节，必须是 utf8 编码 支持的格式详见 https://work.weixin.qq.com/api/doc/90000/90136/91770 |
 
 ### 图片格式消息
@@ -68,11 +83,11 @@
     md5: 0582d8564cdee3187207666898f75205
 ```
 
-| 参数      | 必须   | 说明                                                       |
-|---------|------|----------------------------------------------------------|
-| msgtype | true | 消息类型，此时固定为 image                                         |
+| 参数    | 必须 | 说明                                                                                 |
+| ------- | ---- | ------------------------------------------------------------------------------------ |
+| msgtype | true | 消息类型，此时固定为 image                                                           |
 | base64  | true | 图片内容的 base64 编码 注：图片（base64 编码前）最大不能超过 2 M，支持 JPG、PNG 格式 |
-| md5     | true | 图片内容（base64 编码前）的 md5 值                                  |
+| md5     | true | 图片内容（base64 编码前）的 md5 值                                                   |
 
 ### 图文格式消息
 
@@ -87,13 +102,13 @@
     msgtype: news
     articles: '[{"title":"中秋节礼品领取","description":"今年中秋节公司有豪礼相送","url":"URL","picurl":"https://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png"}]'
 ```
-| 参数                   | 必须    | 说明                                                    |
-|----------------------|-------|-------------------------------------------------------|
-| msgtype              | true  | 消息类型，此时固定为 news                                       |
-| articles             | true  | 图文消息，一个图文消息支持 1 到 8 条图文，必须是序列化后的 JSON 字符串             |
-| articles.title       | true  | 标题，不超过 128 个字节，超过会自动截断                                |
-| articles.description | false | 描述，不超过 512 个字节，超过会自动截断                                |
-| articles.url         | false | 点击后跳转的链接。                                             |
+| 参数                 | 必须  | 说明                                                                              |
+| -------------------- | ----- | --------------------------------------------------------------------------------- |
+| msgtype              | true  | 消息类型，此时固定为 news                                                         |
+| articles             | true  | 图文消息，一个图文消息支持 1 到 8 条图文，必须是序列化后的 JSON 字符串            |
+| articles.title       | true  | 标题，不超过 128 个字节，超过会自动截断                                           |
+| articles.description | false | 描述，不超过 512 个字节，超过会自动截断                                           |
+| articles.url         | false | 点击后跳转的链接。                                                                |
 | articles.picurl      | false | 图文消息的图片链接，支持 JPG、PNG 格式，较好的效果为大图 1068*455，小图 150*150。 |
 
 ### 文件格式消息
@@ -110,9 +125,9 @@
     media_id: 3a8asd892asd8asd
 ```
 
-| 参数       | 必须   | 说明                                                                         |
-|----------|------|----------------------------------------------------------------------------|
-| msgtype  | true | 消息类型，此时固定为 file                                                            |
+| 参数     | 必须 | 说明                                                                                    |
+| -------- | ---- | --------------------------------------------------------------------------------------- |
+| msgtype  | true | 消息类型，此时固定为 file                                                               |
 | media_id | true | 文件 id，通过 [文件上传接口](https://work.weixin.qq.com/api/doc/90000/90136/91770) 获取 |
 
 ### 模版卡片类型消息 - 文本通知模版卡片
@@ -129,9 +144,9 @@
     template_card: '{"card_type":"text_notice","source":{"icon_url":"https://wework.qpic.cn/wwpic/252813_jOfDHtcISzuodLa_1629280209/0","desc":"企业微信","desc_color":0},"main_title":{"title":"欢迎使用企业微信","desc":"您的好友正在邀请您加入企业微信"},"emphasis_content":{"title":"100","desc":"数据含义"},"quote_area":{"type":1,"url":"https://work.weixin.qq.com/?from=openApi","appid":"APPID","pagepath":"PAGEPATH","title":"引用文本标题","quote_text":"Jack：企业微信真的很好用~\nBalian：超级好的一款软件！"},"sub_title_text":"下载企业微信还能抢红包！","horizontal_content_list":[{"keyname":"邀请人","value":"张三"},{"keyname":"企微官网","value":"点击访问","type":1,"url":"https://work.weixin.qq.com/?from=openApi"},{"keyname":"企微下载","value":"企业微信.apk","type":2,"media_id":"MEDIAID"}],"jump_list":[{"type":1,"url":"https://work.weixin.qq.com/?from=openApi","title":"企业微信官网"},{"type":2,"appid":"APPID","pagepath":"PAGEPATH","title":"跳转小程序"}],"card_action":{"type":1,"url":"https://work.weixin.qq.com/?from=openApi","appid":"APPID","pagepath":"PAGEPATH"}}'
 ```
 
-| 参数      | 必须   | 说明                                                                                                  |
-|---------|------|-----------------------------------------------------------------------------------------------------|
-| msgtype | true | 消息类型，此时固定为 template_card                                                                                 |
+| 参数          | 必须 | 说明                                                                                                                                                                 |
+| ------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| msgtype       | true | 消息类型，此时固定为 template_card                                                                                                                                   |
 | template_card | true | 模版卡片参数，必须是序列化后的 JSON 字符串，参数详见 https://developer.work.weixin.qq.com/document/path/91770#%E6%A8%A1%E7%89%88%E5%8D%A1%E7%89%87%E7%B1%BB%E5%9E%8B |
 
 ### 模版卡片类型消息 - 图文展示模版卡片
@@ -149,9 +164,9 @@
 
 ```
 
-| 参数      | 必须   | 说明                                                                                                  |
-|---------|------|-----------------------------------------------------------------------------------------------------|
-| msgtype | true | 消息类型，此时固定为 template_card                                                                                 |
+| 参数          | 必须 | 说明                                                                                                                                                                 |
+| ------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| msgtype       | true | 消息类型，此时固定为 template_card                                                                                                                                   |
 | template_card | true | 模版卡片参数，必须是序列化后的 JSON 字符串，参数详见 https://developer.work.weixin.qq.com/document/path/91770#%E6%A8%A1%E7%89%88%E5%8D%A1%E7%89%87%E7%B1%BB%E5%9E%8B |
 
 ### WECHAT_WORK_BOT_WEBHOOK
