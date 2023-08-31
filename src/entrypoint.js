@@ -19,6 +19,7 @@ const payload = {};
 
 if (process.env.INPUT_OUTSIDE_GROUP) {
   // 外部群
+  payload.socketType = 2 // @see https://apifox.com/apidoc/project-1035094/api-23520034
   if (process.env.INPUT_OUTSIDE_MSGTYPE === 'text') {
     let rawMessage = {}
     rawMessage.type = 203;
