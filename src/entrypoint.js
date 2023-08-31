@@ -17,7 +17,7 @@ function parseList(value, fieldName) {
 const payload = {};
 
 
-if (process.env.INPUT_WECHAT_OUTSIDE_GROUP) {
+if (process.env.INPUT_OUTSIDE_GROUP) {
   // 外部群
   if (process.env.INPUT_OUTSIDE_MSGTYPE === 'text') {
     let rawMessage = {}

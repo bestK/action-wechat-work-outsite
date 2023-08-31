@@ -7,6 +7,33 @@ branding:
   color: 'red'
 
 inputs:
+  outside_group:
+    description: '是否外部群，true false'
+    required: true
+  outside_msgtype:
+    description: '消息类型，当前支持 text file'
+    required: true
+  outside_title_list:
+    description: '群名，必须是序列化后的 JSON 字符串'
+    required: true
+  outside_received_content:
+    description: '文字消息'
+    required: true
+  outside_at_list:
+    description: '提醒群中的指定成员，【所有人】 表示提醒所有人，必须是序列化后的 JSON 字符串'
+    required: true
+  outside_extra_text:
+    description: '文件附加消息'
+    required: true
+  outside_file_base64:
+    description: '文件base64'
+    required: true
+  outside_file_url:
+    description: '文件网络地址'
+    required: true
+  outside_object_name:
+    description: '文件名称'
+    required: true
   msgtype:
     description: '消息类型，当前支持 text markdown image news file template_card'
     required: true
